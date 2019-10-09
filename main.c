@@ -57,7 +57,7 @@ void print_grouped_servers(Server *servers, int size) {
 
 int main() {
     int n = 5;
-    Server* a = malloc(n * sizeof(Server));
+    Server* a = (Server*) malloc(n * sizeof(Server));
     for (int i = 0; i < n; ++i) {
         Server tmp = {.dns_name = "abc", .ip = "1.1.1.1", .mask = "1.1.1.1",
                       .processors_count = 1, .processor_kernels_count = i};
