@@ -5,7 +5,7 @@ before_install:
   - sudo apt install cmake
 
 install:
-  - pip install cpplint
+  - pip install --user cpplint
 
 script:
   - g++ -g -Wall -Wextra main.c -o main
