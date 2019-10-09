@@ -3,6 +3,7 @@ language: c
 before_install:
   - sudo apt update
   - sudo apt install cmake
+  - pip install cpplint
 
 script:
   - g++ -g -Wall -Wextra main.c -o main
