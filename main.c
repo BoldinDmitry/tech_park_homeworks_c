@@ -17,7 +17,7 @@ struct Server{
     int processor_kernels_count;
 };
 
-int* compare(const Server *server1, const Server *server2) {
+int compare(const void *server1, const void *server2) {
     Server *s1 = (Server *) (server1);
     Server *s2 = (Server *) server2;
 
