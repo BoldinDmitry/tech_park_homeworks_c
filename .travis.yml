@@ -1,56 +1,17 @@
-dist:     trusty
-sudo:     required
-
 language: c
 
-os:
-  - linux
+before_install:
+  - sudo apt update
+  - sudo apt install valgrid
+  - sudo apt install cmake
 
+script:
+  - cmake CMakeLists.txt
+  - make Makefile
 
-#Для того чтобы CI не работал в master
-branches:
-  only:
-    - gh-pages
-    - /.*/
-
-compiler:
-  - gcc
-  - clang
+after_script:
+  - make clean
 
 addons:
   apt:
-    packages:
-      - valgrind
-      - cppcheck
-      - make
-      - cmake
-      - lcov
-
-env:
-  # список переменных окружения, влияющих на матрицу сборки:
-  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
-  - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
-  - TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
-  - TARGET_CPU=x86 BUILD_CONFIGURATION=Release
-
-install:
-  # скрипт настройки среды и установки зависимостей:
-  - source ci/travis/install-$TRAVIS_OS_NAME
-
-script:
-  # скрипт сборки и тестирования проекта:
-  - g++ -g -Wall -Wextra main.c -o main
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./main ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --error-exitcode=1 --enable=warning,performance,information,style *.c *.h ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -q https://github.com/catchorg/Catch2/releases/download/v2.2.3/catch.hpp ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then g++ -g -o0 -coverage -Wall -Wextra -Werror main.c -o test ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./main ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then uname -a ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then g++ --version ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --version ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --version ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then lcov --version ; fi
-  - mkdir build
-  - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DTARGET_CPU=$TARGET_CPU
-  - cmake --build .
+    update: true
