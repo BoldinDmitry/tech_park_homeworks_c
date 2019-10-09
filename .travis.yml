@@ -5,8 +5,11 @@ before_install:
   - sudo apt install cmake
 
 script:
-  - ccmake .
-  - make
+  - g++ -g -Wall -Wextra main.c -o main
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build .
 
 after_script:
   - make clean
