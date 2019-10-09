@@ -18,11 +18,12 @@ struct Server{
 };
 
 int compare(const void *server1, const void *server2) {
-    Server *s1 = (Server *) (server1);
-    Server *s2 = (Server *) server2;
+    Server *s1 = (Server *) (server1);  // NOLINT
+    Server *s2 = (Server *) server2;  // NOLINT
 
     signed int s1_mask[4], s2_mask[4];
-    sscanf(s1 -> mask, "%d.%d.%d.%d", &s1_mask[0], &s1_mask[1], &s1_mask[2], &s1_mask[3]);
+    sscanf(s1 -> mask, "%d.%d.%d.%d", &s1_mask[0], &s1_mask[1], &s1_mask[2],
+            &s1_mask[3]);
     sscanf(s2 -> mask, "%d.%d.%d.%d", &s2_mask[0], &s2_mask[1], &s2_mask[2],
             &s2_mask[3]);
 
@@ -57,7 +58,8 @@ void print_grouped_servers(Server *servers, int size) {
 
 int main() {
     int n = 5;
-    Server* a = (Server*) malloc(n * sizeof(Server));
+    Server* a = (Server*) malloc(n * sizeof(Server));  // NOLINT
+
     for (int i = 0; i < n; ++i) {
         Server tmp = {.dns_name = "abc", .ip = "1.1.1.1", .mask = "1.1.1.1",
                       .processors_count = 1, .processor_kernels_count = i};
