@@ -17,7 +17,7 @@ struct Server{
     int processor_kernels_count;
 };
 
-int compare(const Server *server1, const Server *server2) {
+int* compare(const Server *server1, const Server *server2) {
     Server *s1 = (Server *) (server1);
     Server *s2 = (Server *) server2;
 
@@ -42,9 +42,9 @@ int compare(const Server *server1, const Server *server2) {
 
     int ip_compare = strcmp(subnet_1, subnet_2);
     if (ip_compare == 0)
-        return s1 -> processors_count - s2 -> processors_count;
+        return (int *) (s1->processors_count - s2->processors_count);
     else
-        return - ip_compare;
+        return (int *) -ip_compare;
 }
 
 void print_grouped_servers(Server *servers, int size) {
