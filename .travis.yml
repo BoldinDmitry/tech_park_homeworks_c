@@ -2,7 +2,6 @@ language: c
 
 before_install:
   - sudo apt update
-  - sudo apt install valgrid
   - sudo apt install cmake
 
 script:
