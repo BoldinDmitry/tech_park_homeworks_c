@@ -3,11 +3,11 @@ language: c
 before_install:
   - sudo apt update
   - sudo apt install cmake
+  - pip3 install --user cpplint
 
-install:
-  - pip install --user cpplint
 
 script:
+  - cpplint main.c
   - g++ -g -Wall -Wextra main.c -o main
   - mkdir build
   - cd build
