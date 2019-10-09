@@ -1,6 +1,18 @@
-cmake_minimum_required(VERSION 3.14)
-project(first_homerok_c C)
+if ("${TARGET_CPU}" STREQUAL "amd64")
+    set (CMAKE_SIZEOF_VOID_P 8)
 
-set(CMAKE_C_STANDARD 99)
+    set_property (GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS TRUE)
+    set_property (GLOBAL PROPERTY FIND_LIBRARY_USE_LIB32_PATHS FALSE)
+elseif ("${TARGET_CPU}" STREQUAL "x86")
+    set (CMAKE_SIZEOF_VOID_P 4)
 
-add_executable(first_homerok_c main.c)
+    set_property (GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS FALSE)
+    set_property (GLOBAL PROPERTY FIND_LIBRARY_USE_LIB32_PATHS TRUE)
+
+    if (GCC)
+        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+        set (CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -m32")
+    endif ()
+else ()
+    message (FATAL_ERROR "Unsupported CPU: ${TARGET_CPU}")
+endif ()
