@@ -14,7 +14,6 @@ branches:
     - /.*/
 
 compiler:
-  - gcc
   - clang
 
 addons:
