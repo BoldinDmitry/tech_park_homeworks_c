@@ -54,7 +54,7 @@ install:
 
 script:
   # скрипт сборки и тестирования проекта:
-  - g++ -g -Wall -Wextra -Werror main.c -o main
+  - g++ -g -Wall -Wextra main.c -o main
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then valgrind --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./main ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cppcheck --error-exitcode=1 --enable=warning,performance,information,style *.c *.h ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -q https://github.com/catchorg/Catch2/releases/download/v2.2.3/catch.hpp ; fi
