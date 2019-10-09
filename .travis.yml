@@ -5,6 +5,7 @@ before_install:
   - sudo apt install cmake
 
 script:
+  - ls
   - cmake CMakeLists.txt
   - make Makefile
 
