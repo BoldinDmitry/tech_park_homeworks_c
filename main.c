@@ -42,9 +42,9 @@ int compare(const void *server1, const void *server2) {
 
     int ip_compare = strcmp(subnet_1, subnet_2);
     if (ip_compare == 0)
-        return (int *) (s1->processors_count - s2->processors_count);
+        return s1->processors_count - s2->processors_count;
     else
-        return (int *) -ip_compare;
+        return -ip_compare;
 }
 
 void print_grouped_servers(Server *servers, int size) {
