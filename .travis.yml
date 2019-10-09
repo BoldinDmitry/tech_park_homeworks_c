@@ -5,9 +5,9 @@ before_install:
   - sudo apt install cmake
 
 script:
-  - cmake CMakeLists.txt
-  - make Makefile
-  - cmake --build .
+  - ccmake .
+  - make
+
 after_script:
   - make clean
 
