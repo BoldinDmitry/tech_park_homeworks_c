@@ -48,8 +48,41 @@ int compare(const void *server1, const void *server2) {
         return -ip_compare;
 }
 
+void swap(void* v1, void* v2, int size) {
+    char *buffer[size];
+    memcpy(buffer, v1, size);
+    memcpy(v1, v2, size);
+    memcpy(v2, buffer, size);
+}
+
+void my_qsort(void* v, int size, int left, int right,
+              int (*comp)(void*, void*)) {
+    void *vt, *v3;
+    int i, last, mid = (left + right) / 2;
+    if (left >= right)
+        return;
+
+    void* vl = (char*)(v + (left * size));  // NOLINT
+    void* vr = (char*)(v + (mid * size));  // NOLINT
+    swap(vl, vr, size);
+    last = left;
+    for (i = left + 1; i <= right; i++) {
+        vt = (char*)(v + (i * size));  // NOLINT
+        if ((*comp)(vl, vt) > 0) {
+            ++last;
+            v3 = (char*)(v + (last * size));  // NOLINT
+            swap(vt, v3, size);
+        }
+    }
+    v3 = (char*)(v + (last * size));  // NOLINT
+    swap(vl, v3, size);
+    my_qsort(v, size, left, last - 1, comp);
+    my_qsort(v, size, last + 1, right, comp);
+}
+
 void print_grouped_servers(Server *servers, int size) {
-    qsort(servers, size-1, sizeof(Server), compare);
+    my_qsort(servers, sizeof(Server), 0, size - 1,
+             (int (*)(void *, void *)) compare);
     for (int i = 0; i < size; ++i)
         printf("%s %s %s %d %d\n", servers[i].dns_name, servers[i].ip,
                 servers[i].mask, servers[i].processors_count,
