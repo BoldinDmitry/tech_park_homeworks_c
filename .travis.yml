@@ -1,0 +1,29 @@
+language: c
+
+before_install:
+  - sudo apt update
+  - sudo apt install cmake
+
+before_script:
+  - pip3 install --user cpplint
+
+
+script:
+  - cpplint main.c
+  - cppcheck main.c
+  - g++ -g -Wall -Wextra main.c -o main
+  - mkdir build
+  - cd build
+  - cmake ..
+  - cmake --build .
+
+after_script:
+  - make clean
+
+addons:
+  apt:
+    packages:
+      - "python3"
+      - "python3-pip"
+      - "cppcheck"
+    update: true
