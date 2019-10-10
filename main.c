@@ -94,7 +94,7 @@ int main() {
     Server* a = (Server*) malloc(n * sizeof(Server));  // NOLINT
 
     for (int i = 0; i < n; ++i) {
-        Server tmp = {.dns_name = "abc", .ip = "1.1.1.1", .mask = "1.1.1.1",
+        Server tmp = {.dns_name = "abc", .ip = "13.1.1.1", .mask = "1.1.1.1",
                       .processors_count = 1, .processor_kernels_count = i};
         a[i] = tmp;
     }
